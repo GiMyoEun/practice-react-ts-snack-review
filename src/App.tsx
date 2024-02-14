@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import Header from './components/Header';
+import NewReviewForm from './components/NewReviewForm';
+import ModalContextProvider from './store/ModalContext';
+import UiContextProvider from './store/UiContext';
+import { fetchBrandsData } from './store/brands-actions';
+import { fetchSnacksData } from './store/snacks-actions';
+import { AppDispatch } from './store';
+
+import AllList from './components/AllList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(fetchBrandsData());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchSnacksData());
+    }, [dispatch]);
+
+    return (
+        <>
+            <ModalContextProvider>
+                <UiContextProvider>
+                    <Header />
+                    <main className="th-layout-main ">
+                        <NewReviewForm />
+
+                        <AllList />
+                    </main>
+                </UiContextProvider>
+            </ModalContextProvider>
+        </>
+    );
 }
 
 export default App;
