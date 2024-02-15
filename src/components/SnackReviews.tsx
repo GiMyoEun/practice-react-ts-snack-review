@@ -87,7 +87,7 @@ const SnackReviews: React.FC<{
                             />
 
                             <button type="button" disabled={isSending} onClick={submitHandler} className="reply-btn">
-                                저장
+                                ↗
                             </button>
                             {actions}
                         </div>

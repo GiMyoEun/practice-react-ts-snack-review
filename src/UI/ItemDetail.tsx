@@ -9,8 +9,8 @@ const ItemDetail: React.FC<{
                     <div className="textset">
                         <h2 className="textset-tit-snack">{props.name}</h2>
                     </div>
-                    <div className="contents-img">
-                        <img src={props.image} />
+                    <div>
+                        <img src={props.image} className="contents-img" />
                     </div>
                 </div>
             </div>
