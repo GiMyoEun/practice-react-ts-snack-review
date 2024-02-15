@@ -346,6 +346,7 @@
     color: var(--text-color1);
 }
 button.reply-btn {
+    border-radius: 100px;
     border: none;
     margin: 2px;
     padding: 10px;
@@ -366,15 +367,11 @@ button.reply-btn {
 .delete-btn {
     border: none;
 
-    margin-left: auto;
-    padding: 1rem;
+    margin-left: 2rem;
+    background-color: transparent;
 }
 .star-rating {
-    border: none;
     font-size: x-small;
-
-    margin-left: auto;
-    padding: 1rem;
 }
 
 dialog.modal {
@@ -385,6 +382,20 @@ dialog.modal {
 .comment {
     margin: 2rem;
     display: flex;
+}
+.comment-grid {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.grid-container {
+    font-weight: bold;
+    text-align: center;
+}
+.grid-container-left {
+    margin-left: 2rem;
+    font-weight: bold;
+    text-align: left;
 }
 .textset-tit-snack {
     margin: 2rem;

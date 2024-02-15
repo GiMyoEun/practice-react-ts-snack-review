@@ -15,7 +15,6 @@ const AlertModal: React.FC<AlertType> = (props) => {
                     확인
                 </button>
             </Modal>
-            ;
         </>
     );
 };

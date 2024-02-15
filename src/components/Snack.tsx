@@ -2,6 +2,8 @@ import { snackType } from './AllList';
 import { useState } from 'react';
 import SnackReviews from './SnackReviews';
 import ItemDetail from '../UI/ItemDetail';
+import { HiBars3 } from 'react-icons/hi2';
+import { HiArrowSmallLeft } from 'react-icons/hi2';
 
 const Snack: React.FC<{
     item: { item: snackType; brandName: string };
@@ -28,7 +30,7 @@ const Snack: React.FC<{
                 type="button"
                 onClick={() => props.onClickBtn('snacks', props.item.item.brand)}
             >
-                목록
+                <HiArrowSmallLeft />
             </button>
         </>
     );

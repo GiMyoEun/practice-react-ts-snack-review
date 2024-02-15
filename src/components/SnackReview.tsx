@@ -1,5 +1,9 @@
 import useHttp from '../hooks/useHttps';
 import Star from './SnackStar';
+import { useState } from 'react';
+import Confirm from '../UI/Comfirm';
+import { HiArchiveBoxArrowDown } from 'react-icons/hi2';
+
 const requestConfigSubmit = {
     method: 'DELETE',
     headers: {
@@ -17,6 +21,9 @@ type SnackReviewType = {
 };
 
 const SnackReview: React.FC<SnackReviewType> = (props) => {
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [confirmMessage, setConfirmMessage] = useState('');
+
     const {
         data: submitResData,
         isLoading: isSending,
@@ -30,7 +37,20 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     );
 
     const deleteHandler = () => {
-        sendRequest();
+        setShowConfirm(true);
+        setConfirmMessage('삭제하시겠습니까?');
+    };
+
+    const deleteSnackHandler = () => {
+        setShowConfirm(false);
+        setConfirmMessage('');
+        // sendRequest();
+    };
+
+    const denySubmitHandler = () => {
+        setShowConfirm(false);
+        setConfirmMessage('');
+        return;
     };
 
     let actions = <p></p>;
@@ -45,21 +65,35 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     }
 
     return (
-        <div className="comment">
-            <h6 className="inputset-tit">{props.comment}</h6>
-            <div className="star-rating">
-                <Star onChangeValue={() => {}} value={props.star} showRating={true} small={true} />
+        <>
+            <Confirm
+                showConfirm={showConfirm}
+                message={confirmMessage}
+                onConfirm={deleteSnackHandler}
+                onCloseConfirm={denySubmitHandler}
+            />
+
+            <div className="comment-grid">
+                <div className="grid-container-left">
+                    <h6 className="inputset-tit">{props.comment}</h6>
+                </div>
+
+                {actions}
+                <div className="grid-container">
+                    <Star onChangeValue={() => {}} value={props.star} showRating={true} small={true} />
+                </div>
+                <div className="grid-container">
+                    <button
+                        type="button"
+                        disabled={props.isSending || isSending}
+                        className="delete-btn"
+                        onClick={deleteHandler}
+                    >
+                        <HiArchiveBoxArrowDown />
+                    </button>
+                </div>
             </div>
-            {actions}
-            {/* <button
-                type="button"
-                disabled={props.isSending || isSending}
-                className="delete-btn"
-                onClick={deleteHandler}
-            >
-                삭제
-            </button> */}
-        </div>
+        </>
     );
 };
 

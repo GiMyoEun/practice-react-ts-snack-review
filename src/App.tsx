@@ -21,13 +21,17 @@ function App() {
         dispatch(fetchSnacksData());
     }, [dispatch]);
 
+    const reFetchSnacksHandler = () => {
+        dispatch(fetchSnacksData());
+    };
+
     return (
         <>
             <ModalContextProvider>
                 <UiContextProvider>
                     <Header />
                     <main className="th-layout-main ">
-                        <NewReviewForm />
+                        <NewReviewForm onSubmit={reFetchSnacksHandler} />
 
                         <AllList />
                     </main>
