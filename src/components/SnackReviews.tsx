@@ -1,12 +1,13 @@
 import useHttp from '../hooks/useHttps';
 import { useEffect, useState } from 'react';
-
+import SnackStar from './SnackStar';
 import { IRootState } from '../store';
 import { useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
 import { fetchSnackReviewData, deleteSnackReview } from '../store/snacks-actions';
 import SnackReview from './SnackReview';
+import { TiLocationArrowOutline } from 'react-icons/ti';
 
 const requestConfigSubmit = {
     method: 'POST',
@@ -79,15 +80,16 @@ const SnackReviews: React.FC<{
                             <input
                                 type="text"
                                 className="inputset-input form-control"
-                                placeholder="댓글을 입력해주세요."
+                                placeholder="댓글과 별점을 입력해주세요."
                                 id="comment"
                                 name="comment"
                                 value={comment}
                                 onChange={(event) => changeFormDataHandler(event.currentTarget.value)}
                             />
+                            <SnackStar />
 
                             <button type="button" disabled={isSending} onClick={submitHandler} className="reply-btn">
-                                ↗
+                                <TiLocationArrowOutline />
                             </button>
                             {actions}
                         </div>

@@ -9,7 +9,7 @@ const ItemDetail: React.FC<{
                     <div className="textset">
                         <h2 className="textset-tit-snack">{props.name}</h2>
                     </div>
-                    <div>
+                    <div className="contents-img-div">
                         <img src={props.image} className="contents-img" />
                     </div>
                 </div>

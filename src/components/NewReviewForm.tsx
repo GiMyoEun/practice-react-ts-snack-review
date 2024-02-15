@@ -8,6 +8,7 @@ import Input from '../UI/Input';
 import SelectBox from '../UI/SelectBox';
 import Modal from '../UI/Modal';
 import Form from '../UI/Form';
+import SnackStar from './SnackStar';
 
 const requestConfigSubmit = {
     method: 'POST',
@@ -109,7 +110,7 @@ export default function NewReviewForm() {
                         />
                     </label>
                 </div>
-
+                <SnackStar />
                 <Input
                     label="과자이름"
                     id="name"
@@ -118,6 +119,7 @@ export default function NewReviewForm() {
                     value={formData.name}
                     onChange={changeFormDataHandler}
                 />
+
                 <Input
                     label="이미지링크"
                     id="image"
@@ -126,6 +128,7 @@ export default function NewReviewForm() {
                     value={formData.image}
                     onChange={changeFormDataHandler}
                 />
+
                 {actions}
 
                 <button type="button" onClick={handleClose} disabled={isSending} className="btnset-save">

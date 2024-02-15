@@ -387,6 +387,9 @@ dialog.modal {
     width: 100%;
     margin: 2rem;
 }
+.contents-img-div {
+    margin-right: 10%;
+}
 
 .basic-N5 .contents-control {
     display: flex;
