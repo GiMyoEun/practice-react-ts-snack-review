@@ -55,17 +55,28 @@ export const fetchSnackReviewData = (id: string) => {
         try {
             const reviewData = await FetchData();
             let newArr: {}[] = [];
+            let i = 0;
+            let sum = 0;
 
             Object.keys(reviewData).map((key: string) => {
+                i++;
+                sum += reviewData[key].star || 0;
                 newArr.push({
                     id: key.toString(),
                     comment: reviewData[key].comment,
+                    star: reviewData[key].star || 0,
                 });
             });
+            let aver = Math.ceil(sum / i);
 
             dispatch(
                 snacksActions.replaceSnackReview({
                     items: newArr || [],
+                })
+            );
+            dispatch(
+                snacksActions.replaceStarAver({
+                    starAver: aver || 0,
                 })
             );
         } catch (error) {

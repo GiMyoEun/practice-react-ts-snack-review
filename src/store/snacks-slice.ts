@@ -5,6 +5,7 @@ const snacksSlice = createSlice({
     initialState: {
         items: [],
         reviews: [],
+        starAver: 0,
     },
     reducers: {
         replaceSnacks(state, action) {
@@ -15,6 +16,9 @@ const snacksSlice = createSlice({
         },
         updateSnackReviewsTemp(state, action) {
             state.reviews = state.reviews.concat(action.payload.items);
+        },
+        replaceStarAver(state, action) {
+            state.starAver = action.payload.starAver;
         },
     },
 });

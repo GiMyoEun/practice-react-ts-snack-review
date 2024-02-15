@@ -17,13 +17,14 @@ export type snackType = {
     brand: string;
     name: string;
     image: string;
+    starAver: number;
 };
 
 const ItemsList = () => {
     const brandsItems: BrandType[] = useSelector((state: IRootState) => state.brands.items);
     const snacksItems: snackType[] = useSelector((state: IRootState) => state.snacks.items);
     const [snack, setSnack] = useState<{ item: snackType; brandName: string }>({
-        item: { id: '', brand: '', name: '', image: '' },
+        item: { id: '', brand: '', name: '', image: '', starAver: 0 },
         brandName: '',
     });
 
@@ -50,6 +51,7 @@ const ItemsList = () => {
                 brand: '',
                 name: '',
                 image: '',
+                starAver: 0,
             };
             setSnack({
                 item: { ...targetSnack },

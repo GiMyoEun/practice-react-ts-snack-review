@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { fetchSnackReviewData, deleteSnackReview } from '../store/snacks-actions';
 import SnackReview from './SnackReview';
 import { TiLocationArrowOutline } from 'react-icons/ti';
+import Alert from '../UI/AlertModal';
 
 const requestConfigSubmit = {
     method: 'POST',
@@ -20,15 +21,23 @@ export type snackReviewType = {
     id: string;
     snackId: string;
     comment: string;
+    star: number;
 };
 
 const SnackReviews: React.FC<{
     id: string;
+    onChangeHandler: (aver: number) => void;
 }> = (props) => {
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+    const [rating, setRating] = useState(0);
     const [firstRandering, setFirstRendring] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
     const [comment, setComment] = useState<string>('');
     const snackReviewItems: snackReviewType[] = useSelector((state: IRootState) => state.snacks.reviews);
+    const starAver: number = useSelector((state: IRootState) => state.snacks.starAver);
+
+    props.onChangeHandler(starAver);
 
     const {
         data: submitResData,
@@ -43,16 +52,37 @@ const SnackReviews: React.FC<{
             setFirstRendring(false);
             dispatch(fetchSnackReviewData(props.id));
             setComment('');
+            setRating(0);
         }
     }, [submitResData, errorSubmitForm, dispatch]);
 
     const submitHandler = () => {
+        if (!comment) {
+            setShowAlert(true);
+            setMessage('댓글을 입력해주세요');
+            return;
+        }
+        if (!rating) {
+            setShowAlert(true);
+            setMessage('별점을 입력해주세요');
+            return;
+        }
+
         sendRequest(
             JSON.stringify({
                 comment,
                 snackId: props.id,
+                star: rating,
             })
         );
+    };
+
+    const hideAlert = () => {
+        setShowAlert(false);
+    };
+
+    const changeStarValue = (value: number) => {
+        setRating(value);
     };
 
     const changeFormDataHandler = (value: string) => {
@@ -73,6 +103,8 @@ const SnackReviews: React.FC<{
 
     return (
         <>
+            <Alert showAlert={showAlert} onCloseAlert={hideAlert} message={message} />
+
             <div className="form-group form-line">
                 <div className="inputset inputset-line inputset-lg inputset-label">
                     <label>
@@ -86,7 +118,7 @@ const SnackReviews: React.FC<{
                                 value={comment}
                                 onChange={(event) => changeFormDataHandler(event.currentTarget.value)}
                             />
-                            <SnackStar />
+                            <SnackStar onChangeValue={changeStarValue} value={rating} />
 
                             <button type="button" disabled={isSending} onClick={submitHandler} className="reply-btn">
                                 <TiLocationArrowOutline />
@@ -102,6 +134,7 @@ const SnackReviews: React.FC<{
                                     snackId={props.id}
                                     comment={item.comment}
                                     isSending={isSending}
+                                    star={item.star}
                                 />
                             ))}
                     </label>

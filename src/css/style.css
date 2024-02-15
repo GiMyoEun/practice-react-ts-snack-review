@@ -369,6 +369,13 @@ button.reply-btn {
     margin-left: auto;
     padding: 1rem;
 }
+.star-rating {
+    border: none;
+    font-size: x-small;
+
+    margin-left: auto;
+    padding: 1rem;
+}
 
 dialog.modal {
     width: auto;

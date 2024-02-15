@@ -1,5 +1,5 @@
 import useHttp from '../hooks/useHttps';
-
+import Star from './SnackStar';
 const requestConfigSubmit = {
     method: 'DELETE',
     headers: {
@@ -13,6 +13,7 @@ type SnackReviewType = {
     snackId: string;
     comment: string;
     isSending: boolean;
+    star: number;
 };
 
 const SnackReview: React.FC<SnackReviewType> = (props) => {
@@ -46,6 +47,9 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     return (
         <div className="comment">
             <h6 className="inputset-tit">{props.comment}</h6>
+            <div className="star-rating">
+                <Star onChangeValue={() => {}} value={props.star} showRating={true} small={true} />
+            </div>
             {actions}
             {/* <button
                 type="button"

@@ -110,7 +110,7 @@ export default function NewReviewForm() {
                         />
                     </label>
                 </div>
-                <SnackStar />
+
                 <Input
                     label="과자이름"
                     id="name"
