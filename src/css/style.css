@@ -388,6 +388,22 @@ dialog.modal {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr;
 }
+
+.snack-grid {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+}
+.snack-grid-container {
+    font-weight: bold;
+}
+.snack-grid-container-button {
+    border: none;
+    margin-left: 2rem;
+    background-color: antiquewhite;
+    border-radius: 100rem;
+    padding: 1rem;
+    align-self: center;
+}
 .grid-container {
     font-weight: bold;
     text-align: center;

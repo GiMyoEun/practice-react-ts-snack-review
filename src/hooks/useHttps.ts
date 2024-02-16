@@ -26,11 +26,16 @@ export default function useHttp(url: string, config: { method?: string }, initia
     }
 
     const sendRequest = useCallback(
-        async function sendRequest(data?: any) {
+        async function sendRequest(data?: any, newUrl?: string) {
+            let requestUrl = url;
+            if (newUrl) {
+                requestUrl = newUrl;
+            }
+
             setIsLoading(true);
 
             try {
-                const resData = await sendHttpRequest(url, { ...config, body: data });
+                const resData = await sendHttpRequest(requestUrl, { ...config, body: data });
 
                 setData(resData);
             } catch (error: any) {

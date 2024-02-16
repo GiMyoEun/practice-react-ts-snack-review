@@ -1,6 +1,5 @@
 import { snacksActions } from './snacks-slice';
 import { Action, Dispatch } from '@reduxjs/toolkit';
-import { snackReviewType } from '../components/SnackReviews';
 
 export const fetchSnacksData = () => {
     return async (dispatch: Dispatch<Action>) => {
@@ -118,55 +117,55 @@ export const deleteSnackReview = (url: string) => {
     };
 };
 
-export const updateSnackReviewTemp = (
-    snackId: string,
-    reviewId: string,
-    updateDataObj: { comment: string; star: number },
-    oldReviewList: snackReviewType[]
-) => {
-    return async (dispatch: Dispatch<Action>) => {
-        const FetchData = async () => {
-            const updateConfig: {} = {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'text/plain',
-                    withCredentials: true,
-                },
-            };
+// export const updateSnackReviewTemp = (
+//     snackId: string,
+//     reviewId: string,
+//     updateDataObj: { comment: string; star: number },
+//     oldReviewList: snackReviewType[]
+// ) => {
+//     return async (dispatch: Dispatch<Action>) => {
+//         const FetchData = async () => {
+//             const updateConfig: {} = {
+//                 method: 'PUT',
+//                 headers: {
+//                     'Content-Type': 'text/plain',
+//                     withCredentials: true,
+//                 },
+//             };
 
-            const response = await fetch(`${process.env.REACT_APP_FIREBASE_URL}reviews/${snackId}/${reviewId}.json`, {
-                ...updateConfig,
-                body: JSON.stringify(updateDataObj),
-            });
+//             const response = await fetch(`${process.env.REACT_APP_FIREBASE_URL}reviews/${snackId}/${reviewId}.json`, {
+//                 ...updateConfig,
+//                 body: JSON.stringify(updateDataObj),
+//             });
 
-            if (!response.ok) {
-                throw new Error('Could not update review data!');
-            }
+//             if (!response.ok) {
+//                 throw new Error('Could not update review data!');
+//             }
 
-            const data = await response.json();
+//             const data = await response.json();
 
-            return data;
-        };
-        try {
-            const reviewData = await FetchData();
-            const newReviewList = oldReviewList.map((item) => {
-                if (item.id === reviewId) {
-                    item.comment = updateDataObj.comment;
-                    item.star = updateDataObj.star;
-                }
-                return item;
-            });
+//             return data;
+//         };
+//         try {
+//             const reviewData = await FetchData();
+//             const newReviewList = oldReviewList.map((item) => {
+//                 if (item.id === reviewId) {
+//                     item.comment = updateDataObj.comment;
+//                     item.star = updateDataObj.star;
+//                 }
+//                 return item;
+//             });
 
-            dispatch(
-                snacksActions.replaceSnackReview({
-                    items: newReviewList || [],
-                })
-            );
-        } catch (error) {
-            throw new Error('스낵리뷰를 수정하는데에 실패하였습니다');
-        }
-    };
-};
+//             dispatch(
+//                 snacksActions.replaceSnackReview({
+//                     items: newReviewList || [],
+//                 })
+//             );
+//         } catch (error) {
+//             throw new Error('스낵리뷰를 수정하는데에 실패하였습니다');
+//         }
+//     };
+// };
 
 export const updateSnackReviewsTemp = (newList: { id: string; comment: string; star: number }[]) => {
     return async (dispatch: Dispatch<Action>) => {
@@ -179,8 +178,63 @@ export const updateSnackReviewsTemp = (newList: { id: string; comment: string; s
     };
 };
 
+export const updateSnacksTemp = (
+    newList: {
+        id: string;
+        brand: string;
+        image: string;
+        name: string;
+    }[]
+) => {
+    return async (dispatch: Dispatch<Action>) => {
+        dispatch(
+            snacksActions.replaceSnacks({
+                items: newList || [],
+            })
+        );
+        console.log('저장성공');
+    };
+};
+
 export const setInitSnackReviews = () => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch(snacksActions.setInitSnackReviews());
+    };
+};
+
+export const fetchSnackReviewDataQuantity = (id: string) => {
+    return async (dispatch: Dispatch<Action>) => {
+        const FetchData = async () => {
+            const response = await fetch(`${process.env.REACT_APP_FIREBASE_URL}/reviews/${id}.json`);
+
+            if (!response.ok) {
+                throw new Error('Could not fetch brands data!');
+            }
+
+            const data = await response.json();
+
+            return data;
+        };
+        try {
+            const reviewData = await FetchData();
+
+            let i = 0;
+
+            Object.keys(reviewData).map((key: string) => {
+                i++;
+            });
+
+            dispatch(
+                snacksActions.setRiveiwsCount({
+                    reviewsCount: i,
+                })
+            );
+        } catch (error) {
+            dispatch(
+                snacksActions.setRiveiwsCount({
+                    reviewsCount: 0,
+                })
+            );
+        }
     };
 };

@@ -6,6 +6,7 @@ const snacksSlice = createSlice({
         items: [],
         reviews: [],
         starAver: 0,
+        reviewsCount: 0,
     },
     reducers: {
         replaceSnacks(state, action) {
@@ -23,6 +24,10 @@ const snacksSlice = createSlice({
         setInitSnackReviews(state) {
             state.reviews = [];
             state.starAver = 0;
+            state.reviewsCount = 0;
+        },
+        setRiveiwsCount(state, action) {
+            state.reviewsCount = action.payload.reviewsCount;
         },
     },
 });
