@@ -32,12 +32,12 @@ const SnackReviews: React.FC<{
     const [message, setMessage] = useState<string>('');
     const [rating, setRating] = useState(0);
     const [firstRandering, setFirstRendring] = useState(true);
+    const snackReviewItems: snackReviewType[] = useSelector((state: IRootState) => state.snacks.reviews);
+
     const dispatch = useDispatch<AppDispatch>();
     const [comment, setComment] = useState<string>('');
-    const snackReviewItems: snackReviewType[] = useSelector((state: IRootState) => state.snacks.reviews);
-    const starAver: number = useSelector((state: IRootState) => state.snacks.starAver);
 
-    props.onChangeHandler(starAver);
+    const starAver: number = useSelector((state: IRootState) => state.snacks.starAver);
 
     const {
         data: submitResData,
@@ -48,13 +48,18 @@ const SnackReviews: React.FC<{
     } = useHttp(`${process.env.REACT_APP_FIREBASE_URL}reviews/${props.id}.json`, requestConfigSubmit, []);
 
     useEffect(() => {
+        props.onChangeHandler(starAver);
+    }, [starAver]);
+
+    useEffect(() => {
         if (firstRandering || (submitResData && submitResData['message'] && !errorSubmitForm)) {
+            clearData();
             setFirstRendring(false);
             dispatch(fetchSnackReviewData(props.id));
             setComment('');
             setRating(0);
         }
-    }, [submitResData, errorSubmitForm, dispatch]);
+    }, [submitResData, errorSubmitForm, dispatch, firstRandering, snackReviewItems]);
 
     const submitHandler = () => {
         if (!comment) {
@@ -71,7 +76,7 @@ const SnackReviews: React.FC<{
         sendRequest(
             JSON.stringify({
                 comment,
-                snackId: props.id,
+
                 star: rating,
             })
         );
@@ -97,13 +102,13 @@ const SnackReviews: React.FC<{
         actions = <p>저장에 실패하였습니다</p>;
     }
 
-    // if (submitResData && submitResData['message'] && !errorSubmitForm) {
-    //     actions = <p>정보 저장에 성공하였습니다</p>;
-    // }
+    if (submitResData && submitResData['message'] && !errorSubmitForm) {
+        actions = <p>정보 저장에 성공하였습니다</p>;
+    }
 
     return (
         <>
-            <Alert showAlert={showAlert} onCloseAlert={hideAlert} message={message} />
+            {showAlert && <Alert showAlert={showAlert} onCloseAlert={hideAlert} message={message} />}
 
             <div className="form-group form-line">
                 <div className="inputset inputset-line inputset-lg inputset-label">
@@ -135,6 +140,7 @@ const SnackReviews: React.FC<{
                                     comment={item.comment}
                                     isSending={isSending}
                                     star={item.star}
+                                    snackReviewItems={snackReviewItems}
                                 />
                             ))}
                     </label>

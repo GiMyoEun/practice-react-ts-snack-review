@@ -118,9 +118,69 @@ export const deleteSnackReview = (url: string) => {
     };
 };
 
-export const updateSnackReviewsTemp = (snackReview: snackReviewType) => {
+export const updateSnackReviewTemp = (
+    snackId: string,
+    reviewId: string,
+    updateDataObj: { comment: string; star: number },
+    oldReviewList: snackReviewType[]
+) => {
     return async (dispatch: Dispatch<Action>) => {
-        dispatch(snacksActions.updateSnackReviewsTemp(snackReview));
+        const FetchData = async () => {
+            const updateConfig: {} = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'text/plain',
+                    withCredentials: true,
+                },
+            };
+
+            const response = await fetch(`${process.env.REACT_APP_FIREBASE_URL}reviews/${snackId}/${reviewId}.json`, {
+                ...updateConfig,
+                body: JSON.stringify(updateDataObj),
+            });
+
+            if (!response.ok) {
+                throw new Error('Could not update review data!');
+            }
+
+            const data = await response.json();
+
+            return data;
+        };
+        try {
+            const reviewData = await FetchData();
+            const newReviewList = oldReviewList.map((item) => {
+                if (item.id === reviewId) {
+                    item.comment = updateDataObj.comment;
+                    item.star = updateDataObj.star;
+                }
+                return item;
+            });
+
+            dispatch(
+                snacksActions.replaceSnackReview({
+                    items: newReviewList || [],
+                })
+            );
+        } catch (error) {
+            throw new Error('스낵리뷰를 수정하는데에 실패하였습니다');
+        }
+    };
+};
+
+export const updateSnackReviewsTemp = (newList: { id: string; comment: string; star: number }[]) => {
+    return async (dispatch: Dispatch<Action>) => {
+        dispatch(
+            snacksActions.replaceSnackReview({
+                items: newList || [],
+            })
+        );
         console.log('저장성공');
+    };
+};
+
+export const setInitSnackReviews = () => {
+    return async (dispatch: Dispatch<Action>) => {
+        dispatch(snacksActions.setInitSnackReviews());
     };
 };

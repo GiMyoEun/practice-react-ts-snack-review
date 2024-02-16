@@ -4,13 +4,15 @@ async function sendHttpRequest(url: string, config: {}) {
     const response = await fetch(url, config);
 
     const resData = await response.json();
-    resData['message'] = 'Success to fetch Data';
+    if (resData) {
+        resData['message'] = 'Success to fetch Data';
+    }
 
     if (!response.ok) {
         throw new Error(resData.message || 'Failed to fetch data');
     }
 
-    return resData;
+    return resData || { message: 'success' };
 }
 
 export default function useHttp(url: string, config: { method?: string }, initialData: any) {

@@ -5,6 +5,9 @@ import { IRootState } from '../store';
 import { BrandType } from '../UI/SelectBox';
 import { useSelector } from 'react-redux';
 import Snack from './Snack';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
+import { fetchSnackReviewData } from '../store/snacks-actions';
 
 type uiType = {
     type: string;
@@ -23,6 +26,7 @@ export type snackType = {
 const ItemsList = () => {
     const brandsItems: BrandType[] = useSelector((state: IRootState) => state.brands.items);
     const snacksItems: snackType[] = useSelector((state: IRootState) => state.snacks.items);
+    const dispatch = useDispatch<AppDispatch>();
     const [snack, setSnack] = useState<{ item: snackType; brandName: string }>({
         item: { id: '', brand: '', name: '', image: '', starAver: 0 },
         brandName: '',
@@ -46,6 +50,7 @@ const ItemsList = () => {
         });
 
         if (type === 'snack') {
+            dispatch(fetchSnackReviewData(targetId));
             const targetSnack = snacksItems.find((item: snackType) => item.id === targetId) || {
                 id: '',
                 brand: '',

@@ -20,6 +20,10 @@ const snacksSlice = createSlice({
         replaceStarAver(state, action) {
             state.starAver = action.payload.starAver;
         },
+        setInitSnackReviews(state) {
+            state.reviews = [];
+            state.starAver = 0;
+        },
     },
 });
 
