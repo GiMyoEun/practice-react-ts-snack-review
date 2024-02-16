@@ -386,7 +386,7 @@ dialog.modal {
 .comment-grid {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 0fr 2fr 2fr;
 }
 
 .snack-grid {
@@ -395,6 +395,8 @@ dialog.modal {
 }
 .snack-grid-container {
     font-weight: bold;
+    align-self: center;
+    vertical-align: middle;
 }
 .snack-grid-container-button {
     border: none;
@@ -412,6 +414,10 @@ dialog.modal {
     margin-left: 2rem;
     font-weight: bold;
     text-align: left;
+}
+.grid-container-end {
+    margin-right: 2rem;
+    font-weight: bold;
 }
 .textset-tit-snack {
     margin: 2rem;

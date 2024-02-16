@@ -1,8 +1,8 @@
 import useHttp from '../hooks/useHttps';
 import Star from './SnackStar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Confirm from '../UI/Comfirm';
-
+import { useRef } from 'react';
 import { HiArchiveBoxXMark } from 'react-icons/hi2';
 import { HiXMark } from 'react-icons/hi2';
 import AlertModal from '../UI/AlertModal';
@@ -44,6 +44,13 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     const [rating, setRating] = useState(props.star);
     const [comment, setComment] = useState<string>(props.comment);
     const dispatch = useDispatch<AppDispatch>();
+    const commentRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (updateMode) {
+            commentRef.current!.focus();
+        }
+    }, [updateMode]);
 
     const {
         data: submitResData,
@@ -185,11 +192,9 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
                 <div className="grid-container-left">
                     {updateMode && (
                         <input
+                            ref={commentRef}
                             type="text"
                             className="inputset-input form-control"
-                            placeholder="댓글과 별점을 입력해주세요."
-                            id="comment"
-                            name="comment"
                             value={comment}
                             onChange={(event) => changeFormDataHandler(event.currentTarget.value)}
                         />
@@ -202,7 +207,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
                     {!updateMode && <Star onChangeValue={() => {}} value={rating} showRating={true} small={true} />}
                     {updateMode && <Star onChangeValue={changeStarValue} value={rating} />}
                 </div>
-                <div className="grid-container">
+                <div className="grid-container-end">
                     {!updateMode && (
                         <>
                             <button
