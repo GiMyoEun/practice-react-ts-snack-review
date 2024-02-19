@@ -6,6 +6,7 @@ type InputType = {
     value: string;
     onChange: (value: string, type: string) => void;
     required?: boolean;
+    disabled?: boolean;
 };
 
 const Input: React.FC<InputType> = ({ label, ...props }) => {

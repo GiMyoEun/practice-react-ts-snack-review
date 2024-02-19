@@ -1,4 +1,6 @@
 import Modal from './Modal';
+import { PiXCircleFill } from 'react-icons/pi';
+import { PiShareFatFill } from 'react-icons/pi';
 
 type ConfirmType = {
     showConfirm: boolean;
@@ -14,10 +16,10 @@ const Confirm: React.FC<ConfirmType> = (props) => {
                 <section>{props.message}</section>
 
                 <button type="button" onClick={props.onCloseConfirm} className="btnset-save">
-                    취소
+                    <PiXCircleFill />
                 </button>
                 <button type="button" onClick={props.onConfirm} className="btnset-save">
-                    확인
+                    <PiShareFatFill />
                 </button>
             </Modal>
         </>

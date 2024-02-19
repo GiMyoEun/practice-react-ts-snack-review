@@ -1,9 +1,12 @@
+import { isDisabled } from '@testing-library/user-event/dist/utils';
+
 type SelectType = {
     id: string;
     name: string;
     data: {}[];
     value: string;
     onChange: (value: string, type: string) => void;
+    isDisabled?: boolean;
 };
 
 export type BrandType = {
@@ -11,7 +14,7 @@ export type BrandType = {
     name?: string;
 };
 
-const SelectBox: React.FC<SelectType> = (props) => {
+const SelectBox: React.FC<SelectType> = ({ isDisabled = false, ...props }) => {
     return (
         <select
             className="inputset-input form-control"
@@ -19,6 +22,7 @@ const SelectBox: React.FC<SelectType> = (props) => {
             name={props.name}
             value={props.value}
             onChange={(event) => props.onChange(event.currentTarget.value, props.name)}
+            disabled={isDisabled}
         >
             <option value="">선택</option>
             {props.data.map((item: BrandType) => (

@@ -27,8 +27,13 @@ const Snack: React.FC<{
     return (
         <>
             <ItemDetail
-                name={`[ ${props.item.brandName} ] ${props.item.item.name}`}
+                brand={props.item.item.brand}
+                name={props.item.item.name}
+                brandName={props.item.brandName}
                 image={props.item.item.image}
+                id={props.item.item.id}
+                good={props.item.item.good}
+                bad={props.item.item.bad}
                 starAver={starAver}
             />
             <SnackReviews id={props.item.item.id} onChangeHandler={onChangeStarAver} />

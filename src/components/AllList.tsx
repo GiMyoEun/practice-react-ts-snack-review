@@ -21,6 +21,8 @@ export type snackType = {
     name: string;
     image: string;
     starAver: number;
+    good: number;
+    bad: number;
 };
 
 const ItemsList = () => {
@@ -28,7 +30,7 @@ const ItemsList = () => {
     const snacksItems: snackType[] = useSelector((state: IRootState) => state.snacks.items);
     const dispatch = useDispatch<AppDispatch>();
     const [snack, setSnack] = useState<{ item: snackType; brandName: string }>({
-        item: { id: '', brand: '', name: '', image: '', starAver: 0 },
+        item: { id: '', brand: '', name: '', image: '', starAver: 0, good: 0, bad: 0 },
         brandName: '',
     });
 
@@ -56,6 +58,8 @@ const ItemsList = () => {
                 brand: '',
                 name: '',
                 image: '',
+                good: 0,
+                bad: 0,
                 starAver: 0,
             };
             setSnack({

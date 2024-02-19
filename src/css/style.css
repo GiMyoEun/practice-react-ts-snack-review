@@ -355,13 +355,31 @@ button.reply-btn {
 
 .btnset-save {
     text-align: center;
+
     padding: 1rem;
     float: right;
+    font-size: large;
     border: none;
-    padding: 10px;
+
     text-wrap: nowrap;
     margin-top: 4rem;
     margin: 2rem;
+    background-color: lightgray;
+    border-radius: 100px;
+}
+
+.btnset-save-border-none {
+    text-align: center;
+    padding: 1rem;
+    float: right;
+    font-size: large;
+    border: none;
+    font-size: x-large;
+    text-wrap: nowrap;
+    margin-top: 4rem;
+    margin: 2rem;
+    background-color: transparent;
+    border-radius: 100px;
 }
 
 .delete-btn {
@@ -387,6 +405,22 @@ dialog.modal {
     margin-top: 1rem;
     display: grid;
     grid-template-columns: 3fr 0fr 2fr 2fr;
+}
+.contents-btn-div {
+    text-align: center;
+}
+.contents-btn {
+    border: none;
+
+    margin-left: 1rem;
+
+    background-color: transparent;
+}
+.contents-btn-emogi {
+    font-size: x-large;
+}
+.contents-btn-p {
+    font-size: small;
 }
 
 .snack-grid {

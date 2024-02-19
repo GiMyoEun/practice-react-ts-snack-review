@@ -24,6 +24,8 @@ export const fetchSnacksData = () => {
                     brand: snacksData[key].brand,
                     image: snacksData[key].image,
                     name: snacksData[key].name,
+                    good: snacksData[key].good || 0,
+                    bad: snacksData[key].bad || 0,
                 });
             });
 

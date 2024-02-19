@@ -1,43 +1,52 @@
-import { useState, useContext } from 'react';
-import { ModalContext, ModalType } from '../store/ModalContext';
+import Modal from '../UI/Modal';
+import { formDataType } from './NewReviewForm';
+import { useState } from 'react';
+import Form from '../UI/Form';
+import SelectBox from '../UI/SelectBox';
 import { IRootState } from '../store';
 import { useSelector } from 'react-redux';
+import Input from '../UI/Input';
+import Confirm from '../UI/Comfirm';
 import useHttp from '../hooks/useHttps';
-import { PiShareFatThin } from 'react-icons/pi';
 import { PiShareFatFill } from 'react-icons/pi';
-import { PiXCircleThin } from 'react-icons/pi';
+
 import { PiXCircleFill } from 'react-icons/pi';
 
-import Input from '../UI/Input';
-import SelectBox from '../UI/SelectBox';
-import Modal from '../UI/Modal';
-import Form from '../UI/Form';
-import Confirm from '../UI/Comfirm';
+type EditSnackFormType = {
+    isEditing: boolean;
+    brandName: string;
+    name: string;
+    image: string;
+    brand: string;
+    id: string;
+    cancelEditing: () => void;
+    onSuccessEditing: (item: formDataType) => void;
+};
 
-const requestConfigSubmit = {
-    method: 'POST',
+const updateConfig: {} = {
+    method: 'PUT',
     headers: {
         'Content-Type': 'text/plain',
+        withCredentials: true,
     },
 };
 
-export type formDataType = {
-    brand: string;
-    name: string;
-    image: string;
-};
-
-const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
+const EditSnackForm: React.FC<EditSnackFormType> = (props) => {
+    const [formIsValid, setFormIsValid] = useState<boolean | undefined>();
+    const brandsItems: {}[] = useSelector((state: IRootState) => state.brands.items);
     const [showConfirm, setShowConfirm] = useState(false);
     const [confirmMessage, setConfirmMessage] = useState('');
-    const brandsItems: {}[] = useSelector((state: IRootState) => state.brands.items);
-    const modalCtx = useContext<ModalType>(ModalContext);
-    const [formIsValid, setFormIsValid] = useState<boolean | undefined>();
     const [formData, setFormData] = useState<formDataType>({
-        brand: '',
-        name: '',
-        image: '',
+        brand: props.brand,
+        name: props.name,
+        image: props.image,
     });
+
+    const changeFormDataHandler = (value: string, type: string) => {
+        setFormData((prevFormData) => {
+            return { ...prevFormData, [type]: value };
+        });
+    };
 
     const {
         data: submitResData,
@@ -45,7 +54,7 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
         error: errorSubmitForm,
         sendRequest,
         clearData,
-    } = useHttp(`${process.env.REACT_APP_FIREBASE_URL}snacks.json`, requestConfigSubmit, []);
+    } = useHttp(`${process.env.REACT_APP_FIREBASE_URL}snacks/${props.id}.json`, updateConfig, []);
 
     let actions = <p className="modal-actions"></p>;
     if (isSending) {
@@ -58,24 +67,11 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
         actions = <p className="modal-actions">모든 정보를 입력해주세요</p>;
     }
     if (submitResData && submitResData['message'] && !errorSubmitForm) {
-        actions = <p className="modal-actions">정보 저장에 성공하였습니다</p>;
-        props.onSubmit();
+        props.onSuccessEditing({ name: formData.name, image: formData.image, brand: formData.brand });
         setTimeout(() => {
-            handleClose();
+            clearData();
         }, 1000);
     }
-
-    const handleClose = () => {
-        clearData();
-        setFormData({
-            brand: '',
-            name: '',
-            image: '',
-        });
-        setFormIsValid(undefined);
-
-        modalCtx.hideModal();
-    };
 
     const submitHandler = () => {
         //event.preventDefault();
@@ -89,22 +85,34 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
             setConfirmMessage('저장하시겠습니까?');
         }
     };
+    const handleClose = () => {
+        clearData();
+        setFormData({
+            brand: props.brand,
+            name: props.name,
+            image: props.image,
+        });
+        setFormIsValid(undefined);
+
+        props.cancelEditing();
+    };
+
     const saveSnackHandler = () => {
         setShowConfirm(false);
         setConfirmMessage('');
-        sendRequest(JSON.stringify(formData));
+        sendRequest(
+            JSON.stringify({
+                brand: formData.brand,
+                name: formData.name,
+                image: formData.image,
+            })
+        );
     };
 
     const denySubmitHandler = () => {
         setShowConfirm(false);
         setConfirmMessage('');
         return;
-    };
-
-    const changeFormDataHandler = (value: string, type: string) => {
-        setFormData((prevFormData) => {
-            return { ...prevFormData, [type]: value };
-        });
     };
 
     return (
@@ -115,7 +123,7 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
                 onConfirm={saveSnackHandler}
                 onCloseConfirm={denySubmitHandler}
             />
-            <Modal open={modalCtx.progress} onClose={handleClose}>
+            <Modal open={props.isEditing} onClose={handleClose}>
                 <Form>
                     <h2>New Snack!</h2>
                     <p>아래 양식을 입력하세요</p>
@@ -168,4 +176,4 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
     );
 };
 
-export default NewReviewForm;
+export default EditSnackForm;
