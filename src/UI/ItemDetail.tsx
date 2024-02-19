@@ -92,7 +92,7 @@ const ItemDetail: React.FC<ItemDetailType> = (props) => {
                         </div>
                         <div className="contents-btn-div">
                             <button className="contents-btn" onClick={EditingHandler}>
-                                <HiMiniPencilSquare className="contents-btn-emogi" />
+                                <HiMiniPencilSquare className="contents-btn-editing" />
                             </button>
                         </div>
                         <Emogi item={props} />

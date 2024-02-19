@@ -11,20 +11,22 @@ export default function Header() {
 
     return (
         <>
-            <div className="basic-N1">
-                <div className="header-inner">
-                    <div className="header-container container-lg">
-                        <h1 className="header-title">SnackReview</h1>
-                        <div className="header-right">
-                            <div className="header-lang">
-                                <button className="header-langbtn" type="button" onClick={handleShowModal}>
-                                    ADD NEW SNACK
-                                </button>
+            <header className="basic-N1" data-bid="XwlSbFQoYC">
+                <div className="basic-N1">
+                    <div className="header-inner">
+                        <div className="header-container container-lg">
+                            <h1 className="header-title">SnackReview</h1>
+                            <div className="header-right">
+                                <div className="header-lang">
+                                    <button className="header-langbtn" type="button" onClick={handleShowModal}>
+                                        ADD NEW SNACK
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </header>
         </>
     );
 }

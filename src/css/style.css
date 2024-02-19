@@ -128,6 +128,7 @@
     position: relative;
     border: none;
     background: none;
+    color: lightpink;
     font-weight: 500;
 }
 .basic-N1 .header-langbtn::after {
@@ -365,6 +366,7 @@ button.reply-btn {
     margin-top: 4rem;
     margin: 2rem;
     background-color: lightgray;
+    color: black;
     border-radius: 100px;
 }
 
@@ -418,6 +420,11 @@ dialog.modal {
 }
 .contents-btn-emogi {
     font-size: x-large;
+    color: lightcoral;
+}
+.contents-btn-editing {
+    font-size: x-large;
+    color: lightseagreen;
 }
 .contents-btn-p {
     font-size: small;
