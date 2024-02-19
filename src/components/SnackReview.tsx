@@ -13,6 +13,7 @@ import { HiCheck } from 'react-icons/hi2';
 import { HiOutlinePencil } from 'react-icons/hi2';
 
 import { snackReviewType } from './SnackReviews';
+import GoodIcons from './GoodIcons';
 
 const requestConfigSubmit = {
     method: 'DELETE',
@@ -25,13 +26,13 @@ const updateConfig: {} = {
     },
 };
 
-type SnackReviewType = {
+export type SnackReviewType = {
     id: string;
     snackId: string;
     comment: string;
     isSending: boolean;
     star: number;
-
+    good: number;
     snackReviewItems: snackReviewType[];
 };
 
@@ -43,6 +44,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     const [updateMode, setUpdateMode] = useState(false);
     const [rating, setRating] = useState(props.star);
     const [comment, setComment] = useState<string>(props.comment);
+    const [good, setGood] = useState<number>(props.good);
     const dispatch = useDispatch<AppDispatch>();
     const commentRef = useRef<HTMLInputElement>(null);
 
@@ -89,6 +91,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
                 JSON.stringify({
                     comment,
                     star: rating,
+                    good: good,
                 })
             );
             setUpdateMode(false);
@@ -149,7 +152,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     }
     if (submitResData && submitResData['message'] && !errorSubmitForm) {
         clearData();
-        const newList: { id: string; comment: string; star: number }[] = props.snackReviewItems.filter(
+        const newList: { id: string; comment: string; star: number; good: number }[] = props.snackReviewItems.filter(
             (item) => item.id !== props.id
         );
         dispatch(updateSnackReviewsTemp(newList));
@@ -162,17 +165,20 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     }
     if (submitUpdateData && submitUpdateData['message'] && !errorUpdating) {
         clearUpdateData();
-        const newList: { id: string; comment: string; star: number }[] = props.snackReviewItems.map((item) => {
-            if (item['id'] === props.id) {
-                return {
-                    id: item['id'],
-                    comment: comment,
-                    star: rating,
-                };
-            } else {
-                return item;
+        const newList: { id: string; comment: string; star: number; good: number }[] = props.snackReviewItems.map(
+            (item) => {
+                if (item['id'] === props.id) {
+                    return {
+                        id: item['id'],
+                        comment: comment,
+                        star: rating,
+                        good: good,
+                    };
+                } else {
+                    return item;
+                }
             }
-        });
+        );
         dispatch(updateSnackReviewsTemp(newList));
     }
 
@@ -226,6 +232,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
                             >
                                 <HiOutlinePencil />
                             </button>
+                            <GoodIcons item={props} rating={rating} comment={comment} />
                         </>
                     )}
                     {updateMode && (

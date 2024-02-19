@@ -66,6 +66,7 @@ export const fetchSnackReviewData = (id: string) => {
                     id: key.toString(),
                     comment: reviewData[key].comment,
                     star: reviewData[key].star || 0,
+                    good: reviewData[key].good || 0,
                 });
             });
             let aver = Math.ceil(sum / i);
@@ -169,7 +170,7 @@ export const deleteSnackReview = (url: string) => {
 //     };
 // };
 
-export const updateSnackReviewsTemp = (newList: { id: string; comment: string; star: number }[]) => {
+export const updateSnackReviewsTemp = (newList: { id: string; comment: string; star: number; good: number }[]) => {
     return async (dispatch: Dispatch<Action>) => {
         dispatch(
             snacksActions.replaceSnackReview({
@@ -186,6 +187,8 @@ export const updateSnacksTemp = (
         brand: string;
         image: string;
         name: string;
+        good: number;
+        bad: number;
     }[]
 ) => {
     return async (dispatch: Dispatch<Action>) => {

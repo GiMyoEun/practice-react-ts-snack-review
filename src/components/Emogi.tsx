@@ -34,15 +34,18 @@ const Emogi: React.FC<{ item: ItemDetailType }> = (props) => {
 
     useEffect(() => {
         if (submitResData && submitResData['message'] && !errorSubmitForm) {
-            clearData();
             if (clickSmile) {
                 setClickSmile(false);
             }
             if (clickSad) {
                 setClickSad(false);
             }
+        }
+    }, [submitResData, errorSubmitForm, clickSmile, clickSad]);
 
-            setClickSad(false);
+    useEffect(() => {
+        if (submitResData && submitResData['message'] && !errorSubmitForm) {
+            clearData();
             dispatch(fetchSnacksData());
         }
     }, [submitResData, errorSubmitForm]);
@@ -56,7 +59,7 @@ const Emogi: React.FC<{ item: ItemDetailType }> = (props) => {
                 brand: props.item.brand,
                 name: props.item.name,
                 image: props.item.image,
-                bad: props.item.bad,
+                bad: badCount,
                 good: goodCount + 1,
             })
         );
@@ -71,8 +74,8 @@ const Emogi: React.FC<{ item: ItemDetailType }> = (props) => {
                 brand: props.item.brand,
                 name: props.item.name,
                 image: props.item.image,
+                good: goodCount,
                 bad: badCount + 1,
-                good: props.item.good,
             })
         );
     };

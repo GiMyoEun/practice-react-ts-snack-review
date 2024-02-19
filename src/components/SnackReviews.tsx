@@ -22,6 +22,7 @@ export type snackReviewType = {
     snackId: string;
     comment: string;
     star: number;
+    good: number;
 };
 
 const SnackReviews: React.FC<{
@@ -140,6 +141,7 @@ const SnackReviews: React.FC<{
                                     comment={item.comment}
                                     isSending={isSending}
                                     star={item.star}
+                                    good={item.good}
                                     snackReviewItems={snackReviewItems}
                                 />
                             ))}

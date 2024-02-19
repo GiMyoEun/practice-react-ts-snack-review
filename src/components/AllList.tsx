@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Snack from './Snack';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
-import { fetchSnackReviewData } from '../store/snacks-actions';
+import { fetchSnackReviewData, fetchSnacksData } from '../store/snacks-actions';
 
 type uiType = {
     type: string;
