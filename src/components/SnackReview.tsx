@@ -1,8 +1,8 @@
 import useHttp from '../hooks/useHttps';
 import Star from './SnackStar';
-import { useEffect, useState } from 'react';
+import { HtmlHTMLAttributes, useEffect, useState } from 'react';
 import Confirm from '../UI/Comfirm';
-import { useRef } from 'react';
+import { useRef, forwardRef, useImperativeHandle } from 'react';
 import { HiArchiveBoxXMark } from 'react-icons/hi2';
 import { HiXMark } from 'react-icons/hi2';
 import AlertModal from '../UI/AlertModal';
@@ -36,7 +36,20 @@ export type SnackReviewType = {
     snackReviewItems: snackReviewType[];
 };
 
-const SnackReview: React.FC<SnackReviewType> = (props) => {
+export type SnackReviewType2 = {
+    id: string;
+    snackId: string;
+    comment: string;
+    isSending: boolean;
+    star: number;
+    good: number;
+    focusRef: (value: boolean) => void;
+
+    snackReviewItems: snackReviewType[];
+};
+export type Ref = HTMLInputElement | null;
+
+const SnackReview = forwardRef<Ref, SnackReviewType2>((props, ref) => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [confirmMessage, setConfirmMessage] = useState('');
@@ -46,11 +59,10 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
     const [comment, setComment] = useState<string>(props.comment);
     const [good, setGood] = useState<number>(props.good);
     const dispatch = useDispatch<AppDispatch>();
-    const commentRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (updateMode) {
-            commentRef.current!.focus();
+            props.focusRef(true);
         }
     }, [updateMode]);
 
@@ -104,6 +116,7 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
         setRating(props.star);
         setComment(props.comment);
         setUpdateMode(false);
+        props.focusRef(false);
     };
 
     const denySubmitHandler = () => {
@@ -198,7 +211,9 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
                 <div className="grid-container-left">
                     {updateMode && (
                         <input
-                            ref={commentRef}
+                            id={props.id}
+                            name={props.id}
+                            ref={ref}
                             type="text"
                             className="inputset-input form-control"
                             value={comment}
@@ -259,6 +274,6 @@ const SnackReview: React.FC<SnackReviewType> = (props) => {
             </div>
         </>
     );
-};
+});
 
 export default SnackReview;

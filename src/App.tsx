@@ -29,6 +29,9 @@ function App() {
         <>
             <ModalContextProvider>
                 <UiContextProvider>
+                    <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                    </head>
                     <Header />
                     <main className="th-layout-main ">
                         <NewReviewForm onSubmit={reFetchSnacksHandler} />

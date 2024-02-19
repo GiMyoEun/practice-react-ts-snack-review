@@ -9,6 +9,7 @@ import { fetchSnackReviewData, deleteSnackReview } from '../store/snacks-actions
 import SnackReview from './SnackReview';
 import { TiLocationArrowOutline } from 'react-icons/ti';
 import Alert from '../UI/AlertModal';
+import { useRef } from 'react';
 
 const requestConfigSubmit = {
     method: 'POST',
@@ -34,6 +35,10 @@ const SnackReviews: React.FC<{
     const [rating, setRating] = useState(0);
     const [firstRandering, setFirstRendring] = useState(true);
     const snackReviewItems: snackReviewType[] = useSelector((state: IRootState) => state.snacks.reviews);
+    const commentRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const divRef = useRef<HTMLDivElement>(null);
+    const [disabled, setDisabled] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
     const [comment, setComment] = useState<string>('');
@@ -51,6 +56,12 @@ const SnackReviews: React.FC<{
     useEffect(() => {
         props.onChangeHandler(starAver);
     }, [starAver]);
+    useEffect(() => {
+        if (disabled) {
+            commentRef.current?.focus();
+        } else {
+        }
+    }, [disabled]);
 
     useEffect(() => {
         if (firstRandering || (submitResData && submitResData['message'] && !errorSubmitForm)) {
@@ -107,6 +118,10 @@ const SnackReviews: React.FC<{
         actions = <p>정보 저장에 성공하였습니다</p>;
     }
 
+    const onFocusingCursor = (value: boolean) => {
+        setDisabled(value);
+    };
+
     return (
         <>
             {showAlert && <Alert showAlert={showAlert} onCloseAlert={hideAlert} message={message} />}
@@ -116,6 +131,7 @@ const SnackReviews: React.FC<{
                     <label>
                         <div className="comment">
                             <input
+                                ref={inputRef}
                                 type="text"
                                 className="inputset-input form-control"
                                 placeholder="댓글과 별점을 입력해주세요."
@@ -123,6 +139,7 @@ const SnackReviews: React.FC<{
                                 name="comment"
                                 value={comment}
                                 onChange={(event) => changeFormDataHandler(event.currentTarget.value)}
+                                disabled={disabled}
                             />
                             <SnackStar onChangeValue={changeStarValue} value={rating} />
 
@@ -134,16 +151,19 @@ const SnackReviews: React.FC<{
 
                         {snackReviewItems &&
                             snackReviewItems.map((item) => (
-                                <SnackReview
-                                    key={item.id}
-                                    id={item.id}
-                                    snackId={props.id}
-                                    comment={item.comment}
-                                    isSending={isSending}
-                                    star={item.star}
-                                    good={item.good}
-                                    snackReviewItems={snackReviewItems}
-                                />
+                                <div key={item.id} ref={divRef}>
+                                    <SnackReview
+                                        ref={commentRef}
+                                        id={item.id}
+                                        snackId={props.id}
+                                        comment={item.comment}
+                                        isSending={isSending}
+                                        star={item.star}
+                                        good={item.good}
+                                        snackReviewItems={snackReviewItems}
+                                        focusRef={onFocusingCursor}
+                                    />
+                                </div>
                             ))}
                     </label>
                 </div>
