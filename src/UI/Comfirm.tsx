@@ -1,6 +1,8 @@
 import Modal from './Modal';
 import { PiXCircleFill } from 'react-icons/pi';
 import { PiShareFatFill } from 'react-icons/pi';
+import { GoCheck } from 'react-icons/go';
+import { GoX } from 'react-icons/go';
 
 type ConfirmType = {
     showConfirm: boolean;
@@ -14,12 +16,11 @@ const Confirm: React.FC<ConfirmType> = (props) => {
         <>
             <Modal open={props.showConfirm} onClose={props.onCloseConfirm}>
                 <section>{props.message}</section>
-
-                <button type="button" onClick={props.onCloseConfirm} className="btnset-save">
-                    <PiXCircleFill />
-                </button>
                 <button type="button" onClick={props.onConfirm} className="btnset-save">
-                    <PiShareFatFill />
+                    <GoCheck />
+                </button>
+                <button type="button" onClick={props.onCloseConfirm} className="btnset-save">
+                    <GoX />
                 </button>
             </Modal>
         </>

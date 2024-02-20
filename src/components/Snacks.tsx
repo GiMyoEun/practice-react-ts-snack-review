@@ -9,7 +9,12 @@ import Confirm from '../UI/Comfirm';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { IRootState } from '../store';
-import { fetchSnackReviewDataQuantity, setInitSnackReviews, updateSnacksTemp } from '../store/snacks-actions';
+import {
+    fetchSnackReviewDataQuantity,
+    fetchSnacksData,
+    setInitSnackReviews,
+    updateSnacksTemp,
+} from '../store/snacks-actions';
 import { useSelector } from 'react-redux';
 import AlertModal from '../UI/AlertModal';
 const requestConfigSubmit = {
@@ -89,8 +94,8 @@ const Snacks: React.FC<{
     if (submitResData && submitResData['message'] && !errorSubmitForm) {
         clearData();
         // actions = <p>삭제에 성공하였습니다.</p>;
-        const newList = props.items.filter((item: snackType) => item.brand === props.brand && item.id !== targetId);
-        dispatch(updateSnacksTemp(newList));
+        // const newList = props.items.filter((item: snackType) => item.brand === props.brand && item.id !== targetId);
+        dispatch(fetchSnacksData());
     }
 
     return (
