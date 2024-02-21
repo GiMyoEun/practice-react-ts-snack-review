@@ -9,6 +9,8 @@ import Input from '../UI/Input';
 import Confirm from '../UI/Comfirm';
 import useHttp from '../hooks/useHttps';
 import { PiShareFatFill } from 'react-icons/pi';
+import { GoCheck } from 'react-icons/go';
+import { GoX } from 'react-icons/go';
 
 import { PiXCircleFill } from 'react-icons/pi';
 
@@ -164,11 +166,12 @@ const EditSnackForm: React.FC<EditSnackFormType> = (props) => {
 
                     {actions}
 
-                    <button type="button" onClick={handleClose} disabled={isSending} className="btnset-save">
-                        <PiXCircleFill />
-                    </button>
                     <button type="button" onClick={submitHandler} disabled={isSending} className="btnset-save">
-                        <PiShareFatFill />
+                        <GoCheck />
+                    </button>
+
+                    <button type="button" onClick={handleClose} disabled={isSending} className="btnset-save">
+                        <GoX />
                     </button>
                 </Form>
             </Modal>

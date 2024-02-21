@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import { PiCheckCircleBold } from 'react-icons/pi';
+import { GoCheck } from 'react-icons/go';
 
 type AlertType = {
     showAlert: boolean;
@@ -12,8 +13,9 @@ const AlertModal: React.FC<AlertType> = (props) => {
         <>
             <Modal open={props.showAlert} onClose={props.onCloseAlert}>
                 <section>{props.message}</section>
-                <button type="button" onClick={props.onCloseAlert} className="btnset-save-border-none">
-                    <PiCheckCircleBold />
+
+                <button type="button" onClick={props.onCloseAlert} className="btnset-save">
+                    <GoCheck />
                 </button>
             </Modal>
         </>

@@ -7,6 +7,8 @@ import { PiShareFatThin } from 'react-icons/pi';
 import { PiShareFatFill } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
 import { PiXCircleFill } from 'react-icons/pi';
+import { GoCheck } from 'react-icons/go';
+import { GoX } from 'react-icons/go';
 
 import Input from '../UI/Input';
 import SelectBox from '../UI/SelectBox';
@@ -156,11 +158,11 @@ const NewReviewForm: React.FC<{ onSubmit: () => void }> = (props) => {
 
                     {actions}
 
-                    <button type="button" onClick={handleClose} disabled={isSending} className="btnset-save">
-                        <PiXCircleFill />
-                    </button>
                     <button type="button" onClick={submitHandler} disabled={isSending} className="btnset-save">
-                        <PiShareFatFill />
+                        <GoCheck />
+                    </button>
+                    <button type="button" onClick={handleClose} disabled={isSending} className="btnset-save">
+                        <GoX />
                     </button>
                 </Form>
             </Modal>
