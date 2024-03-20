@@ -1,6 +1,8 @@
 import Button from '../UI/Button';
 import { useContext } from 'react';
 import { ModalContext, ModalType } from '../store/ModalContext';
+import snacckImg from '../resources/icons/apple-touch-icon.png'
+
 
 export default function Header() {
     const modalCtx = useContext<ModalType>(ModalContext);
@@ -15,7 +17,7 @@ export default function Header() {
                 <div className="basic-N1">
                     <div className="header-inner">
                         <div className="header-container container-lg">
-                            <h1 className="header-title">SnackReview</h1>
+                            <h1 className="header-title">Snack Review<img src={snacckImg}></img></h1>
                             <div className="header-right">
                                 <div className="header-lang">
                                     <button className="header-langbtn" type="button" onClick={handleShowModal}>
