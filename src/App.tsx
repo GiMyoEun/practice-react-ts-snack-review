@@ -29,11 +29,14 @@ function App() {
         <>
             <ModalContextProvider>
                 <UiContextProvider>
-                    <Header />
+                <Header />
                     <main className="th-layout-main ">
+                        <div className="th-layout-main-div">
+                        
                         <NewReviewForm onSubmit={reFetchSnacksHandler} />
 
                         <AllList />
+                        </div>
                     </main>
                 </UiContextProvider>
             </ModalContextProvider>

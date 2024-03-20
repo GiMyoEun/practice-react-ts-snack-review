@@ -404,9 +404,10 @@ dialog.modal {
     display: flex;
 }
 .comment-grid {
+    
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: 3fr 0fr 2fr 2.5fr;
+    grid-template-columns: 70% 0% 10% 20%;
 }
 .contents-btn-div {
     text-align: center;
@@ -669,15 +670,19 @@ dialog.modal {
 /* basic-N9 [PJLsbFqpJ4] */
 .basic-N9 {
     overflow: hidden;
+    
 }
 .basic-N9 .contents-inner {
     padding: 8rem 1.6rem;
+    
 }
 .basic-N9 .contents-container {
     position: relative;
+    
 }
 .basic-N9 .contents-container + .contents-container {
-    width: calc(100% + 64rem);
+    /* width: calc(100% + 64rem); */
+    
     margin-top: -19.4rem;
     margin-left: -32rem;
     padding: 35.4rem 32rem 10rem 32rem;
@@ -696,9 +701,13 @@ dialog.modal {
 .basic-N9 .swiper-slide {
     width: calc(100% / 3);
     margin-right: 4rem;
+    
 }
 .basic-N9 .contents-control {
-    position: absolute;
+    /* position: absolute; */
+    
+    /* position: fixed; */
+    margin: auto;
     right: 0;
     bottom: 44rem;
     display: flex;
@@ -709,6 +718,7 @@ dialog.modal {
 .basic-N9 .swiper-button-next {
     flex-shrink: 0;
     position: static;
+    margin-right: 5%;
     margin-top: 0;
     width: 6rem;
     height: 6rem;
@@ -744,11 +754,13 @@ dialog.modal {
     height: 38rem;
 }
 .basic-N9 .contents-cardset {
+    
     display: flex;
     align-items: center;
 }
 .basic-N9 .contents-cardset .cardset {
-    width: calc(100% / 3);
+    /* width: calc(100% / 3); */
+    width: 100%;
 }
 .basic-N9 .contents-cardset .cardset + .cardset {
     margin-left: 4rem;

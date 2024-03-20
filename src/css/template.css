@@ -8,6 +8,7 @@
 /* ========== */
 /* Variable */
 :root {
+    
     --primary: #111111;
     --secondary: #333333;
     --success: #198754;
@@ -77,6 +78,37 @@
     --ht-xs: 3.2rem;
 }
 
+@media screen and (min-width: 401px) and (max-width: 992px) {
+    body {
+        
+        font-family: var(--ff);
+        font-weight: 400;
+        font-size: var(--fs-p3);
+        line-height: var(--lh-p3);
+        letter-spacing: var(--letter-spacing);
+        color: var(--body-color);
+        background-color: var(--body-bg);
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    
+}
+
+body {
+    
+    font-family: var(--ff);
+    font-weight: 400;
+    font-size: var(--fs-p3);
+    line-height: var(--lh-p3);
+    letter-spacing: var(--letter-spacing);
+    color: var(--body-color);
+    background-color: var(--body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+
 @media (max-width: 992px) {
     :root {
         --fs-h1: 4rem;
@@ -121,18 +153,7 @@
 html {
     font-size: 62.5%; /* 16px * 0.625 = 10px */
 }
-body {
-    margin: 0;
-    font-family: var(--ff);
-    font-weight: 400;
-    font-size: var(--fs-p3);
-    line-height: var(--lh-p3);
-    letter-spacing: var(--letter-spacing);
-    color: var(--body-color);
-    background-color: var(--body-bg);
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+
 hr {
     margin: 1rem 0;
     color: inherit;
@@ -1709,8 +1730,10 @@ body.body-scroll {
 .form-group .textset {
     text-align: center;
 }
+
 .form-group.form-line .inputset + .inputset {
     margin-top: 4rem;
+    
 }
 .form-group.form-line .form-btn {
     margin-top: 6rem;
