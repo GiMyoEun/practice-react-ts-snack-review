@@ -413,7 +413,7 @@ dialog.modal {
     
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: 70% 0% 10% 20%;
+    grid-template-columns: 50% 0% 17% 35%;
 }
 .contents-btn-div {
     text-align: center;
